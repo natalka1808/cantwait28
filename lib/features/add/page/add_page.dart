@@ -18,9 +18,20 @@ class _AddPageState extends State<AddPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider (create: (context) => AddCubit(),
-    child: BlocListener <AddCubit, AddState>(
-      listener: (context, state) { if (state.saved) {Navigator.of(context).pop();}
+    return BlocProvider (
+      create: (context) => AddCubit(),
+    child: BlocListener<AddCubit, AddState>(
+      listener: (context, state) { 
+        if (state.saved) {
+          Navigator.of(context).pop();
+          }
+        if (state.errorMessage.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.errorMessage), 
+              backgroundColor: Colors.red,),
+              );
+              }
       },
       child: BlocBuilder<AddCubit, AddState>(
           builder: (context, state) {
